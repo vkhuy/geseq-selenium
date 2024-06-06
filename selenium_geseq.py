@@ -76,6 +76,9 @@ source.click()
 disclaimer = driver.find_element(by=By.CSS_SELECTOR, value="#cb_disclaimer")
 disclaimer.click()
 
+rnascan = driver.find_element(by=By.CSS_SELECTOR, value="#trnascanv2_enabled")
+rnascan.click()
+
 logger.info('Click parameter')
 
 time.sleep(5)
