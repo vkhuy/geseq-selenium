@@ -97,12 +97,12 @@ time.sleep(300)
 save_button = driver.find_element(by=By.CSS_SELECTOR, value= "#gs_application > div > div.x4_column.x4_column_last > div:nth-child(3) > div.gs_panelhead > a")
 save_button.click()
 
-time.sleep(90)
+time.sleep(60)
 download = driver.find_element(by=By.CSS_SELECTOR, value= "#io_dialog_tail > span > a.cms_button.cms_button_ok")
 download.click()
 logger.info('Download result')
 
-time.sleep(60)
+time.sleep(200)
 try:
     logger.info('Before quitting Firefox')
 
