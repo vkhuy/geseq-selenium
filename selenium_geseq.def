@@ -1,0 +1,62 @@
+BootStrap: docker
+From: python:latest
+
+
+%post
+    # Set the working directory in the container
+    mkdir -p /app
+    cd /app
+
+    ## Update repository list
+    apt-get update -y
+
+    ## Install my essentials
+    apt-get install build-essential wget curl file git unzip \
+        xvfb \
+        libx11-6 \
+        libx11-xcb1 \
+        libxcb1 \
+        libxcomposite1 \
+        libxcursor1 \
+        libxdamage1 \
+        libxext6 \
+        libxfixes3 \
+        libxi6 \
+        libxrandr2 \
+        libxrender1 \
+        libxss1 \
+        libxtst6 \
+        gdebi-core locales-all moreutils -y
+
+    ## Graphical libraries needed to open on Roar
+    apt install libcanberra-gtk-module libcanberra-gtk3-module -y
+
+    ## Set language for firefox
+    export LC_ALL=en_US.utf8
+    export LANG=en_US.utf8
+
+
+    ## Install firefox web browser
+    apt-get install firefox-esr -y
+
+    pip install -U selenium
+    pip install pyvirtualdisplay
+
+
+    ## Install geckodriver
+    wget https://github.com/mozilla/geckodriver/releases/download/v0.35.0/geckodriver-v0.35.0-linux64.tar.gz \
+        -P /usr/bin
+    tar -xzvf /usr/bin/geckodriver-v0.35.0-linux64.tar.gz -C /usr/bin
+
+    ## Install script to run firefox
+    git clone https://github.com/vkhuy/geseq-selenium.git
+    chmod 777 /app/geseq-selenium/selenium_geseq.py
+
+
+%environment
+    export LC_ALL=en_US.utf8
+    export LANG=en_US.utf8
+    export PATH="/app/geseq-selenium:${PATH}"
+
+%runscript
+    exec /app/geseq-selenium/selenium_geseq.py "$@"
